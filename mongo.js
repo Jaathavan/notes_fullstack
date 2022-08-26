@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://jaath_notes:${password}@cluster0.p7nfr0m.mongodb.net/?retryWrites=true&w=majority`
+const url = `mongodb+srv://jaath_notes:${password}@cluster0.p7nfr0m.mongodb.net/noteApp?retryWrites=true&w=majority`
 
 const noteSchema = new mongoose.Schema({
   content: String,
