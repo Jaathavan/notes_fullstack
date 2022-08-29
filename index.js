@@ -7,26 +7,26 @@ const app = express()
 app.use(express.json())
 app.use(express.static('build'))
 
-const password = process.argv[2]
-const url = `mongodb+srv://jaath_notes:hKXam1kA0ukosyGQ@cluster0.p7nfr0m.mongodb.net/noteApp?retryWrites=true&w=majority`
+// const password = process.argv[2]
+// const url = `mongodb+srv://jaath_notes:hKXam1kA0ukosyGQ@cluster0.p7nfr0m.mongodb.net/noteApp?retryWrites=true&w=majority`
 
-mongoose.connect(url)
+// mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
-})
+// const noteSchema = new mongoose.Schema({
+//   content: String,
+//   date: Date,
+//   important: Boolean,
+// })
 
-noteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+// noteSchema.set('toJSON', {
+//   transform: (document, returnedObject) => {
+//     returnedObject.id = returnedObject._id.toString()
+//     delete returnedObject._id
+//     delete returnedObject.__v
+//   }
+// })
 
-const Note = mongoose.model('Note', noteSchema)
+// const Note = mongoose.model('Note', noteSchema)
 
 let notes = [
     {
