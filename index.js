@@ -9,27 +9,6 @@ const app = express()
 app.use(express.json())
 app.use(express.static('build'))
 
-// const password = process.argv[2]
-// const url = `mongodb+srv://jaath_notes:hKXam1kA0ukosyGQ@cluster0.p7nfr0m.mongodb.net/noteApp?retryWrites=true&w=majority`
-
-// mongoose.connect(url)
-
-// const noteSchema = new mongoose.Schema({
-//   content: String,
-//   date: Date,
-//   important: Boolean,
-// })
-
-// noteSchema.set('toJSON', {
-//   transform: (document, returnedObject) => {
-//     returnedObject.id = returnedObject._id.toString()
-//     delete returnedObject._id
-//     delete returnedObject.__v
-//   }
-// })
-
-// const Note = mongoose.model('Note', noteSchema)
-
 let notes = [
     {
       id: 1,
@@ -79,14 +58,9 @@ app.get('/api/notes', (request, response) => {
 
 //get specific based on id
 app.get('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const note = notes.find(note => note.id === id)
-  if (note) {
+  Note.findById(request.params.id).then(note => {
     response.json(note)
-  } else {
-    response.status(404).end()
-  }
-
+  })
 })
 
 //delete route
@@ -108,7 +82,7 @@ const generateId = () => {
 app.post('/api/notes', (request, response) => {
   const body = request.body
 
-  if (!body.content) {
+  if (body.content === undefined) {
     return response.status(400).json({ 
       error: 'content missing' 
     })
@@ -121,9 +95,9 @@ app.post('/api/notes', (request, response) => {
     id: generateId(),
   }
 
-  notes = notes.concat(note)
-
-  response.json(note)
+  notes.save().then(savedNote => {
+    response.json(savedNote)
+  })
 })
 
 
